@@ -1,0 +1,78 @@
+
+
+/*** Выдвигающееся боковое меню | JavaScript ***/
+
+#menu {
+	position: fixed;
+	left: -262px;
+	width: 250px;
+	height: 100%;
+	top: 0;
+}
+
+#menu.menu-open {
+	left: -40px;
+}
+
+#menuToggle {
+    margin-left: 275px;
+}
+
+
+#menuContent {
+	position: absolute;
+	left: 60px;
+	background: #2b271a;
+	width: 200px;
+	height: 100%;
+}
+
+#menu a {
+	margin-left: 40px;
+	color: #00ffff;
+	display: block;
+	font-size: 20px;
+	line-height: 40px;
+	text-decoration:none;
+}
+
+#menu a:hover {
+	color: #00ff40;
+}
+
+#menu {
+	-webkit-transition: all .3s ease;
+	   -moz-transition: all .3s ease;
+		-ms-transition: all .3s ease;
+		 -o-transition: all .3s ease;
+			transition: all .3s ease;
+}
+
+#menuToggle {
+	position: absolute;
+	top: 20px;
+	text-align: center;
+	font-size: 14px;
+	color: #ffffff;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	cursor: pointer;
+	background: rgba(0,0,0,0.45);
+	-webkit-transition: all .1s ease-in-out;
+	   -moz-transition: all .1s ease-in-out;
+		-ms-transition: all .1s ease-in-out;
+		 -o-transition: all .1s ease-in-out;
+			transition: all .1s ease-in-out;
+}
+
+#menuToggle:hover {
+	color: #00ff40;
+	background: rgba(0,0,0,0.2);
+	-webkit-transition: all .1s ease-in-out;
+	   -moz-transition: all .1s ease-in-out;
+		-ms-transition: all .1s ease-in-out;
+		 -o-transition: all .1s ease-in-out;
+			transition: all .1s ease-in-out;
+}
+

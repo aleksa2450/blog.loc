@@ -1,0 +1,146 @@
+@charset "utf-8";
+a {
+    color:inherit;
+    -webkit-transition:all .5s ease-in-out;
+    -moz-transition:all .5s ease-in-out;
+    -khtml-transition:all .5s ease-in-out;
+    -o-transition:all .5s ease-in-out;
+    -ms-transition:all .5s ease-in-out;
+    transition:all .5s ease-in-out
+}
+a,ins {
+    text-decoration:none
+}
+a img,:link img,:visited img {
+    border:none
+}
+a {
+    outline:none;
+    transition:.3s ease-in-out
+}
+a:hover,a:focus {
+    background-color: transparent;
+    text-decoration:none
+}
+a:hover {
+    /*color: #0056b3;*/
+    color:inherit;
+}
+ol,ul{list-style:none}
+
+* {
+    margin:0;
+    padding:0;
+    /* font-weight:lighter;*/
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    color: #2e2e2e;
+    background: #fff;
+    font-size:15px;
+    font-weight:400;
+    line-height:22px;
+    letter-spacing:.06em;
+    position:relative;
+    height:90vh;
+    width:100%;
+    min-width:320px;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale
+}
+/** сетка **/
+.col-full {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+@media (min-width: 576px) {
+    .col-full {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+@media (min-width: 768px) {
+    .col-full {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+@media (min-width: 992px) {
+    .col-full {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+@media (min-width: 1200px) {
+    .col-full {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+@media (min-width: 1200px) {
+    .col-full {
+        padding-left: 4.6875% !important;
+        padding-right: 4.6875% !important;
+    }
+}
+@media (min-width: 2000px) {
+    .col-full {
+        width: 1920px;
+    }
+}
+#loader {
+    background: #fff;
+    position: fixed;
+    z-index: 9999999;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+/**Preloader**/
+.preloader {
+    background: #fff;
+    position: fixed;
+    z-index: 9999999;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+/** displayMessage **/
+.msg{
+    position: fixed;
+    right: 0;
+    bottom:5%;
+    z-index: 99999;
+}
+
+.msg span{
+    padding:0 0 0 10px;
+}
+.close {
+    float: left;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .8;
+}
+.wrapper{
+    min-height:80vh;
+}
+
+.margin-top{
+    margin:100px 0 0 0;
+}
+
+
