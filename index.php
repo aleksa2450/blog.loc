@@ -33,14 +33,29 @@ require __DIR__ . '/config/config.php';
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Главная <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Вход</a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="registry.php">Регистрация</a>
-                    </li>
+                    <?php if (!empty($_SESSION['user'])): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.php?logout=1">Выход</a>
+                        </li>
+                    <?php if ($_SESSION['user']['is_admin'] == 2): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Панель управления</a>
+                            </li>
+                    <?php else: ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Личный кабинет</a>
+                            </li>
+                    <?php endif; ?>
 
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Вход</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="registry.php">Регистрация</a>
+                        </li>
+                    <?php endif; ?>
 
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
@@ -62,7 +77,13 @@ require __DIR__ . '/config/config.php';
                 </div>
             </div>
         <?php endif; ?>
+
+        <?php if (!empty($_SESSION['user'])):?>
+            <?php dump($_SESSION['user']); ?>
+        <?php endif;?>
         <div class="row">
+
+
 
             <?php if (!empty($_SESSION['success'])): ?>
                 <div class="alert alert-success" role="alert">

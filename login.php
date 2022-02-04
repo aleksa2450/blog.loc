@@ -4,58 +4,71 @@ error_reporting(-1);
 
 require __DIR__ . '/config/config.php';
 
-if (!empty($_POST['mode']) && ($_POST['mode'] === 'add_user')){
-    $data = [];
+if (!empty($_POST['mode']) && ($_POST['mode'] ==='login_user')) {
     $errors = [];
+    $data = [];
 
     foreach ($_POST as $key => $value) {
         $data[$key] = strip_tags(htmlspecialchars(trim($value)));
     }
 
-    $user_name = $data['user_name'];
-    $email = $data['email'];
+    $userEmail = $data['email'];
     $password = $data['password'];
 
-    if (empty($user_name)) {
-        $errors['user_name'] = 'Заполните поле имя.' . PHP_EOL;
-    }
-
-    if (empty($email)) {
-        $errors['email'] = 'Заполнте поле email.' . PHP_EOL;
+    if (empty($userEmail)) {
+        $errors['email'] = 'Заполните поле email.';
+    } elseif (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = 'Неккоректный email-адрес.';
     }
 
     if (empty($password)) {
-        $errors['password'] = 'Заполните поле пароль.' . PHP_EOL;
+        $errors['password'] = 'Заполните поле пароль.';
     }
 
     if (!empty($errors)) {
         $_SESSION['error'] = [
-            'user_name' => $errors['user_name'] ?? null,
             'email' => $errors['email'] ?? null,
             'password' => $errors['password'] ?? null,
         ];
-        $_SESSION['user_name'] = $user_name ?? null;
-        $_SESSION['email'] = $email ?? null;
-        header("Location: registy.php");
+
+        $_SESSION['email'] = $user_email ?? null;
+
+        header("Location: login.php");
+        die;
     } else {
-        $sth = $dbh->query("SELECT `id` FROM `users` WHERE `email` = '{$email}'");
-        $result = $sth->fetch_assoc();
-        if ($result) {
-            $_SESSION['error'] = [
-                'email' => 'Этот email уже зарегистрирован',
-            ];
-            $_SESSION['user_name'] = $user_name ?? null;
-            header("Location: registry.php");
+        $sth = $dbh->query("SELECT *  FROM `users` WHERE `email` = '{$userEmail}'");
+
+        $user = $sth->fetch_assoc();
+        if (!$user) {
+            $_SESSION['error_aut'] = 'Email/Пароль введены неверно.';
+            $_SESSION['email'] = $user_email ?? null;
+
+            header("Location: login.php");
             die;
         } else {
-            $password = password_hash($password, PASSWORD_DEFAULT);
-            $sth = $dbh->query("INSERT INTO `users` SET `user_name` = '{$user_name}', `email` = '{$email}', `password` = '{$password}'");
-            $_SESSION['success'] = 'Регистрация прошла успешно.';
+            if (!password_verify($password, $user['password'])) {
+                $_SESSION['error_aut'] = 'Email/Пароль введены неверно.';
+                $_SESSION['email'] = $user_email ?? null;
+
+                header("Location: login.php");
+                die;
+            } else {
+                $data = [];
+                foreach ($user as $key => $value) {
+                    if ('password' == $key) {
+                        continue;
+                    }
+                    $data[$key] = $value;
+                }
+
+                $_SESSION['user'] = $data;
+                $_SESSION['success'] = 'Вы успешно авторизованы';
+
+                header("Location: /");
+                die;
+            }
         }
     }
-
-    header("Location: /");
-    die;
 }
 ?>
 <!doctype html>
@@ -84,9 +97,7 @@ if (!empty($_POST['mode']) && ($_POST['mode'] === 'add_user')){
                     </li>
 
                     <?php if (!empty($_SESSION['user'])): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Выход</a>
-                        </li>
+
                         <?php if ($_SESSION['user']['is_admin'] == 2): ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Панель управления</a>
@@ -98,6 +109,9 @@ if (!empty($_POST['mode']) && ($_POST['mode'] === 'add_user')){
                         <?php endif; ?>
 
                     <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Выход</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="login.php">Вход</a>
                         </li>
@@ -119,17 +133,16 @@ if (!empty($_POST['mode']) && ($_POST['mode'] === 'add_user')){
 
         <div class="row">
             <div class="col-md-12">
-                <h1>Регистрация</h1>
-                <form method="post">
-                    <div class="form-group">
-                        <label for="user_name">Имя</label>
-                        <input type="text" name="user_name" value="<?php if (!empty($_SESSION['error'])): ?><?php echo $_SESSION['user_name']; ?><?php endif; ?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        <small id="userNameHelp" class="form-text text-muted">
-                                <?php if (!empty($_SESSION['error']['user_name'])): ?>
-                                    <?php echo $_SESSION['error']['user_name']; ?>
-                                <?php endif;?>
-                        </small>
+                <h1>Авторизация</h1>
+
+                <?php if(!empty($_SESSION['error_aut'])): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $_SESSION['error_aut']; ?>
                     </div>
+                    <?php unset($_SESSION['error_aut']); ?>
+                <?php endif; ?>
+
+                <form method="post">
 
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -149,12 +162,12 @@ if (!empty($_POST['mode']) && ($_POST['mode'] === 'add_user')){
                                 <?php echo $_SESSION['error']['password']; ?>
                             <?php endif;?>
                         </small>
+                        </small>
                     </div>
                     <?php if (!empty($_SESSION['error'])): ?>
                         <?php unset($_SESSION['error']); ?>
                     <?php endif; ?>
-
-                    <input type="hidden" name="mode" value="add_user">
+                    <input type="hidden" name="mode" value="login_user">
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
 
