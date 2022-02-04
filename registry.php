@@ -49,6 +49,7 @@ if (!empty($_POST['mode']) && ($_POST['mode'] === 'add_user')){
             header("Location: registry.php");
             die;
         } else {
+            $password = password_hash($password, PASSWORD_DEFAULT);
             $sth = $dbh->query("INSERT INTO `users` SET `user_name` = '{$user_name}', `email` = '{$email}', `password` = '{$password}'");
             $_SESSION['success'] = 'Регистрация прошла успешно.';
         }
