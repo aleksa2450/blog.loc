@@ -52,7 +52,25 @@ require __DIR__ . '/config/config.php';
     </header>
 
     <div class="wrapper mt-5">
+        <?php if (!empty($_SESSION['success'])): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success" role="alert">
+                        <?php echo $_SESSION['success']; ?>
+                    </div>
+                    <?php unset($_SESSION['success']); ?>
+                </div>
+            </div>
+        <?php endif; ?>
         <div class="row">
+
+            <?php if (!empty($_SESSION['success'])): ?>
+                <div class="alert alert-success" role="alert">
+                    <?php echo $_SESSION['success']; ?>
+                </div>
+                <?php unset($_SESSION['success']); ?>
+            <?php endif; ?>
+
             <div class="col-md-3">
                 <div class="card" style="width: 18rem;">
                     <img src="..." class="card-img-top" alt="...">
