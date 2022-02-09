@@ -18,16 +18,41 @@ if (!empty($_POST['mode']) && ($_POST['mode'] === 'add_user')){
 
     if (empty($user_name)) {
         $errors['user_name'] = 'Заполните поле имя.' . PHP_EOL;
-    }
+    } else {
+        if (!preg_match("/^[a-z0-9-_]{3,15}$/i", $user_name)){
+            $errors['user_name'] = 'Вы ввели недопустимые символы';
+        }
+        $len = strlen($user_name);
+        if ($len < 3) {
+            $errors['user_name'] = 'Длина логина не может быть меньше 3х символов!' . PHP_EOL;
+        }
+
+    } //  проверка на допустимые символы
+    //проверка на длину не менее 3 символов
 
     if (empty($email)) {
         $errors['email'] = 'Заполнте поле email.' . PHP_EOL;
+    } else {
+
+        if (!preg_match("/^(?:[a-z0-9]+(?:[-_.]?[a-z0-9]+)?@[a-z0-9_.-]
++(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i", $email)) {
+            $errors['email'] = 'Неккоректный ввод email-адреса. Попробуйте снова' . PHP_EOL;
+        }
     }
+    // проверка на допустимый email
 
     if (empty($password)) {
         $errors['password'] = 'Заполните поле пароль.' . PHP_EOL;
-    }
+    } else {
+        if (!preg_match("^\S*(?=\S{5,20})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$", $password)) {
+            $errors['password'] = 'Пароль введён неккоректно. Повторите попытку' . PHP_EOL;
+        }
 
+    }
+    //Проверка на цифры и символы
+    //Проверка на хотя бы 1 символ заглавный
+    // Проверка на длину не менее 5 символов
+                                                                                                                                                                        
     if (!empty($errors)) {
         $_SESSION['error'] = [
             'user_name' => $errors['user_name'] ?? null,
@@ -36,7 +61,7 @@ if (!empty($_POST['mode']) && ($_POST['mode'] === 'add_user')){
         ];
         $_SESSION['user_name'] = $user_name ?? null;
         $_SESSION['email'] = $email ?? null;
-        header("Location: registy.php");
+        header("Location: registry.php");
     } else {
         $sth = $dbh->query("SELECT `id` FROM `users` WHERE `email` = '{$email}'");
         $result = $sth->fetch_assoc();
@@ -133,7 +158,11 @@ if (!empty($_POST['mode']) && ($_POST['mode'] === 'add_user')){
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" name="email" value="<?php if (!empty($_SESSION['error'])): ?><?php echo $_SESSION['email']; ?><?php endif; ?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input type="text" name="email" value="
+                        <?php if (!empty($_SESSION['error'])): ?>
+                            <?php echo $_SESSION['email']; ?>
+                        <?php endif; ?>"
+                               class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                         <small id="emailHelp" class="form-text text-muted">
                             <?php if (!empty($_SESSION['error']['email'])): ?>
                                 <?php echo $_SESSION['error']['email']; ?>
