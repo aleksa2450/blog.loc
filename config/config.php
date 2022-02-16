@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+define('SITE_NAME', 'http://blog.loc/');
+
+
 $dbh = new mysqli('localhost', 'root', '', 'legacy-blog');
 
 if ($dbh->connect_errno) {

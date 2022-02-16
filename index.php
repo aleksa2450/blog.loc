@@ -7,14 +7,14 @@ require __DIR__ . '/config/config.php';
 
 
 
-
+$title = 'Главная';
 ?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Hello, world!</title>
+    <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="assets/css/bootstrap.css">;
     <link rel="stylesheet" href="assets/css/style.css">;
 </head>
@@ -82,6 +82,17 @@ require __DIR__ . '/config/config.php';
             <?php dump($_SESSION['user']); ?>
         <?php endif;?>
         <div class="row">
+
+            <?php if (!empty($_SESSION['errors'])): ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-success" role="alert">
+                            <?php echo $_SESSION['errors']; ?>
+                        </div>
+                        <?php unset($_SESSION['errors']); ?>
+                    </div>
+                </div>
+            <?php endif; ?>
 
 
 

@@ -70,13 +70,14 @@ if (!empty($_POST['mode']) && ($_POST['mode'] ==='login_user')) {
         }
     }
 }
+$title = 'Вход';
 ?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Hello, world!</title>
+    <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="assets/css/bootstrap.css">;
     <link rel="stylesheet" href="assets/css/style.css">;
 </head>
