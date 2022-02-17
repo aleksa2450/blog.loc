@@ -111,12 +111,6 @@ $title = 'Вход';
 
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Выход</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="login.php">Вход</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="registry.php">Регистрация</a>
                         </li>
                     <?php endif; ?>
@@ -169,7 +163,7 @@ $title = 'Вход';
                         <?php unset($_SESSION['error']); ?>
                     <?php endif; ?>
                     <input type="hidden" name="mode" value="login_user">
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary">Войти</button>
                 </form>
 
             </div>

@@ -8,12 +8,12 @@ if(isset($_GET['hash']) && !empty($_GET['hash'])) {
     $hash = strip_tags(htmlspecialchars(trim($_GET['hash'])));
     $query = "UPDATE users SET 
     `status` = '2',
-    `hsah` = ''
+    `hash` = ''
     WHERE `hash`='{$hash}'";
     $dbh->query($query);
     if ($dbh->affected_rows) {
         $_SESSION['success'] = "Подветрждение адреса электронной почты прошло успешно";
-        header("/");
+        header("Location: /");
         die;
     } else {
         $_SESSION['errors'] = "Ошибка подтверждения";

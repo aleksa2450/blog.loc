@@ -185,7 +185,7 @@ $title = 'Регистрация';
                     <?php endif; ?>
 
                     <input type="hidden" name="mode" value="add_user">
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
                 </form>
 
             </div>

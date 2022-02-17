@@ -45,9 +45,9 @@
 
 
             <div class="col-md-12">
-                <h1>Page not Found(#404)</h1>>
+                <h1>Page not Found(#404)</h1>
                 <br>
-                <a href="/"> н главную</a>
+                <button class="btn btn-primary"><a href="/">на главную</a></button>
             </div>
 
 
